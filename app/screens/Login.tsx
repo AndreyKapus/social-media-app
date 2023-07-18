@@ -43,21 +43,27 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../../images/sky.jpeg.jpg')} style={styles.image}>
-            <TextInput 
-                style={styles.input} 
-                placeholder="Email" 
-                autoCapitalize="none"
-                onChangeText={(text) => setLogin(text)}
-                textAlign={"center"}>
-            </TextInput>
-            <TextInput 
-                style={styles.input} 
-                placeholder="Password" 
-                autoCapitalize="none"
-                secureTextEntry={true}
-                onChangeText={(text) => setPassword(text)}
-                textAlign={"center"}>
-            </TextInput>
+            <View style={styles.form}>
+                <View>
+                    <Text style={styles.inputTitle}>Email</Text>
+                    <TextInput 
+                        style={styles.input} 
+                        autoCapitalize="none"
+                        onChangeText={(text) => setLogin(text)}
+                        textAlign={"center"}>
+                    </TextInput>
+                </View>
+                <View style={{marginTop: 20}}>
+                    <Text style={styles.inputTitle}>Password</Text>
+                    <TextInput 
+                        style={styles.input} 
+                        autoCapitalize="none"
+                        secureTextEntry={true}
+                        onChangeText={(text) => setPassword(text)}
+                        textAlign={"center"}>
+                </TextInput>
+                </View>
+            </View>
 
             {loading ? <ActivityIndicator size="large" color="#000000"/>
             : <View>
@@ -74,7 +80,7 @@ export default Login;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',  
+        justifyContent: 'center',
     },
 
     image: {
@@ -83,9 +89,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
 
-    input: {
-        marginVertical: 4,
+    form: {
         marginHorizontal: 20,
+    },
+
+    inputTitle: {
+        color: '#fff'
+    },
+
+    input: {
         height: 50,
         borderWidth: 1,
         borderRadius: 5,
