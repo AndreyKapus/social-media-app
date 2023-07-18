@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Button, ActivityIndicator } from "react-native";
 import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
     const [login, setLogin] = useState('');
@@ -13,6 +13,21 @@ const Login = () => {
         setLoading(true);
         try{
             const responce = await signInWithEmailAndPassword(auth, login, password);
+            console.log(responce);
+            alert('Check your email')
+        } catch (error: any) {
+            console.log(error);
+            alert('Something went wrong'+ error.message)
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    
+    const signUp = async () => {
+        setLoading(true);
+        try{
+            const responce = await createUserWithEmailAndPassword(auth, login, password);
             console.log(responce);
             alert('Check your email')
         } catch (error: any) {
@@ -40,7 +55,10 @@ const Login = () => {
             </TextInput>
 
             {loading ? <ActivityIndicator size="large" color="#000000"/>
-            : <Button title="Login" onPress={signIn}></Button>}
+            : <View>
+                <Button title="Login"  onPress={signIn}></Button>
+                <Button title="SignUp" onPress={signUp}></Button>
+              </View>}
         </View>
     );
 };
@@ -62,5 +80,9 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         color: '#000000',
         paddingLeft: 10,
+    },
+
+    button: {
+        marginBottom: 10
     }
 })
