@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
     },
 
     inputTitle: {
-        color: '#fff'
+        color: '#fff',
+        marginBottom: 10,
+        fontSize: 18,
     },
 
     input: {
