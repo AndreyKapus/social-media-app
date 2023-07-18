@@ -3,8 +3,6 @@ import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
-const image = {uri: './images/sky.jpeg.jpg'}
-
 const Login = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
