@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, TextInput, Button, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, ActivityIndicator, ImageBackground } from "react-native";
 import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+const image = {uri: './images/sky.jpeg.jpg'}
 
 const Login = () => {
     const [login, setLogin] = useState('');
@@ -40,6 +42,7 @@ const Login = () => {
 
     return (
         <View style={styles.container}>
+            <ImageBackground source={require('../../images/sky.jpeg.jpg')} style={styles.image}>
             <TextInput 
                 style={styles.input} 
                 placeholder="Email" 
@@ -59,6 +62,7 @@ const Login = () => {
                 <Button title="Login"  onPress={signIn}></Button>
                 <Button title="SignUp" onPress={signUp}></Button>
               </View>}
+            </ImageBackground>
         </View>
     );
 };
@@ -68,21 +72,26 @@ export default Login;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        marginHorizontal: 20,
-        
+        justifyContent: 'center',  
     },
+
+    image: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+      },
 
     input: {
         marginVertical: 4,
         height: 50,
         borderWidth: 1,
         borderRadius: 4,
+        borderColor: '#fff',
         color: '#000000',
         paddingLeft: 10,
     },
 
     button: {
         marginBottom: 10
-    }
+    },
 })
