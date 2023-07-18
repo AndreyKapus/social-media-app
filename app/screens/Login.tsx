@@ -47,14 +47,16 @@ const Login = () => {
                 style={styles.input} 
                 placeholder="Email" 
                 autoCapitalize="none"
-                onChangeText={(text) => setLogin(text)}>
+                onChangeText={(text) => setLogin(text)}
+                textAlign={"center"}>
             </TextInput>
             <TextInput 
                 style={styles.input} 
                 placeholder="Password" 
                 autoCapitalize="none"
                 secureTextEntry={true}
-                onChangeText={(text) => setPassword(text)}>
+                onChangeText={(text) => setPassword(text)}
+                textAlign={"center"}>
             </TextInput>
 
             {loading ? <ActivityIndicator size="large" color="#000000"/>
@@ -83,11 +85,12 @@ const styles = StyleSheet.create({
 
     input: {
         marginVertical: 4,
+        marginHorizontal: 20,
         height: 50,
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 5,
         borderColor: '#fff',
-        color: '#000000',
+        color: '#fff',
         paddingLeft: 10,
     },
 
