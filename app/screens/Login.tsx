@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Button, ActivityIndicator, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, ActivityIndicator, ImageBackground, TouchableOpacity } from "react-native";
 import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -65,8 +65,13 @@ const Login = () => {
 
             {loading ? <ActivityIndicator size="large" color="#000000"/>
             : <View>
-                <Button title="Login"  onPress={signIn}></Button>
-                <Button title="SignUp" onPress={signUp}></Button>
+                <TouchableOpacity style={styles.button} onPress={signIn}>
+                    <Text style={styles.btnText}>
+                        Sign in
+                    </Text>
+                </TouchableOpacity>
+                {/* <Button title="Login"  onPress={signIn}></Button>
+                <Button title="SignUp" onPress={signUp}></Button> */}
               </View>}
             </ImageBackground>
         </View>
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        height: 50,
+        height: 40,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: '#fff',
@@ -107,6 +112,17 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        marginBottom: 10
+        backgroundColor: '#ff8c00',
+        marginHorizontal: 20,
+        height: 50,
+        borderRadius: 5,
+        marginTop: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
+
+    btnText: {
+        color: '#fff',
+        fontSize: 18,
+    }
 })
