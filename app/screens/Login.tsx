@@ -1,4 +1,13 @@
-import { View, Text, StyleSheet, TextInput, Button, ActivityIndicator, ImageBackground, TouchableOpacity } from "react-native";
+import { View, 
+        Text, 
+        StyleSheet, 
+        TextInput, 
+        ActivityIndicator, 
+        ImageBackground, 
+        TouchableOpacity,
+        Platform,
+        KeyboardAvoidingView,
+        Keyboard, } from "react-native";
 import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -7,13 +16,20 @@ const Login = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isKeyboardShow, setIsKeyboardShow] = useState(false)
     const auth = FIREBASE_AUTH;
+
+    const keyBoardHide = () => {
+        // Keyboard.dismiss();
+        // setIsKeyboardShow(false)
+    }
 
     const signIn = async () => {
         setLoading(true);
         try{
             const responce = await signInWithEmailAndPassword(auth, login, password);
             console.log(responce);
+            keyBoardHide()
             alert('Welcome')
         } catch (error: any) {
             console.log(error);
@@ -41,38 +57,42 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <ImageBackground source={require('../../images/sky.jpeg.jpg')} style={styles.image}>
-            <View style={styles.form}>
-                <View>
-                    <Text style={styles.inputTitle}>Email</Text>
-                    <TextInput 
-                        style={styles.input} 
-                        autoCapitalize="none"
-                        onChangeText={(text) => setLogin(text)}
-                        textAlign={"center"}>
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                    <View style={{...styles.form, marginBottom: isKeyboardShow ? 20 : 100}}>
+                    <View>
+                        <Text style={styles.inputTitle}>Email</Text>
+                        <TextInput 
+                            style={styles.input} 
+                            autoCapitalize="none"
+                            onChangeText={(text) => setLogin(text)}
+                            textAlign={"center"}
+                            onFocus={() => setIsKeyboardShow(true)}>
+                        </TextInput>
+                    </View>
+                    <View style={{marginTop: 20}}>
+                        <Text style={styles.inputTitle}>Password</Text>
+                        <TextInput 
+                            style={styles.input} 
+                            autoCapitalize="none"
+                            secureTextEntry={true}
+                            onChangeText={(text) => setPassword(text)}
+                            textAlign={"center"}
+                            onFocus={() => setIsKeyboardShow(true)}>
                     </TextInput>
-                </View>
-                <View style={{marginTop: 20}}>
-                    <Text style={styles.inputTitle}>Password</Text>
-                    <TextInput 
-                        style={styles.input} 
-                        autoCapitalize="none"
-                        secureTextEntry={true}
-                        onChangeText={(text) => setPassword(text)}
-                        textAlign={"center"}>
-                </TextInput>
-                </View>
-            </View>
+                    </View>
 
-            {loading ? <ActivityIndicator size="large" color="#000000"/>
-            : <View>
-                <TouchableOpacity style={styles.button} onPress={signIn}>
-                    <Text style={styles.btnText}>
-                        Sign in
-                    </Text>
-                </TouchableOpacity>
-                {/* <Button title="Login"  onPress={signIn}></Button>
-                <Button title="SignUp" onPress={signUp}></Button> */}
-              </View>}
+                    {loading ? <ActivityIndicator size="large" color="#000000"/>
+                : <View>
+                    <TouchableOpacity style={styles.button} onPress={signIn} activeOpacity={0.8}>
+                        <Text style={styles.btnText}>
+                            Sign in
+                        </Text>
+                    </TouchableOpacity>
+                    {/* <Button title="Login"  onPress={signIn}></Button>
+                    <Button title="SignUp" onPress={signUp}></Button> */}
+                </View>}
+                </View>
+                </KeyboardAvoidingView>
             </ImageBackground>
         </View>
     );
@@ -89,11 +109,11 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         resizeMode: 'cover',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
       },
 
     form: {
-        marginHorizontal: 20,
+        marginHorizontal: 30,
     },
 
     inputTitle: {
@@ -113,7 +133,6 @@ const styles = StyleSheet.create({
 
     button: {
         backgroundColor: '#ff8c00',
-        marginHorizontal: 20,
         height: 50,
         borderRadius: 5,
         marginTop: 40,
