@@ -12,24 +12,31 @@ import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
+const initialState ={
+    email: '',
+    password: ''
+}
+
 const Login = () => {
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
+    const [state, setState] = useState(initialState)
+    // const [login, setLogin] = useState('');
+    // const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [isKeyboardShow, setIsKeyboardShow] = useState(false)
     const auth = FIREBASE_AUTH;
 
     const keyBoardHide = () => {
-        // Keyboard.dismiss();
-        // setIsKeyboardShow(false)
+        Keyboard.dismiss();
+        setIsKeyboardShow(false);
+        setState(initialState)
     }
 
     const signIn = async () => {
         setLoading(true);
+        keyBoardHide()
         try{
-            const responce = await signInWithEmailAndPassword(auth, login, password);
+            const responce = await signInWithEmailAndPassword(auth, state.email, state.password);
             console.log(responce);
-            keyBoardHide()
             alert('Welcome')
         } catch (error: any) {
             console.log(error);
@@ -43,7 +50,7 @@ const Login = () => {
     const signUp = async () => {
         setLoading(true);
         try{
-            const responce = await createUserWithEmailAndPassword(auth, login, password);
+            const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
             console.log(responce);
             alert('Check your email')
         } catch (error: any) {
@@ -58,14 +65,15 @@ const Login = () => {
         <View style={styles.container}>
             <ImageBackground source={require('../../images/sky.jpeg.jpg')} style={styles.image}>
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-                    <View style={{...styles.form, marginBottom: isKeyboardShow ? 20 : 100}}>
+                    <View style={styles.form}>
                     <View>
                         <Text style={styles.inputTitle}>Email</Text>
                         <TextInput 
                             style={styles.input} 
                             autoCapitalize="none"
-                            onChangeText={(text) => setLogin(text)}
+                            onChangeText={(value) => setState((prevState) => ({...prevState, login: value}) )}
                             textAlign={"center"}
+                            value={state.email}
                             onFocus={() => setIsKeyboardShow(true)}>
                         </TextInput>
                     </View>
@@ -75,8 +83,9 @@ const Login = () => {
                             style={styles.input} 
                             autoCapitalize="none"
                             secureTextEntry={true}
-                            onChangeText={(text) => setPassword(text)}
+                            onChangeText={(value) => setState((prevState) => ({...prevState, password: value}) )}
                             textAlign={"center"}
+                            value={state.password}
                             onFocus={() => setIsKeyboardShow(true)}>
                     </TextInput>
                     </View>
@@ -109,11 +118,12 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         resizeMode: 'cover',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
       },
 
     form: {
         marginHorizontal: 30,
+        justifyContent: 'flex-end',
     },
 
     inputTitle: {
