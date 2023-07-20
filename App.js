@@ -9,6 +9,7 @@ import Login from './app/screens/Login';
 const Stack = createNativeStackNavigator()
 
 export default function App() {
+
   return (
     <NavigationContainer>  
         <Stack.Navigator initialRouteName='Login'>

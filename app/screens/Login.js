@@ -9,9 +9,8 @@ import { View,
         KeyboardAvoidingView,
         Keyboard, } from "react-native";
 import React, {useState} from 'react'
-import * as Font from 'expo-font';
+import { useFonts } from 'expo-font';
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import AppLoading from 'expo-app-loading';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const initialState = {
@@ -19,11 +18,11 @@ const initialState = {
     password: ''
 };
 
-const loadApp = async () => {
-    await Font.loadAsync({
-        'RobotoSlab-regular': require('../../assets/fonst/RobotoSlab-Regular.ttf')
-    })
-}
+// const loadApp = async () => {
+//     await Font.loadAsync({
+//         'RobotoSlab-regular': require('../../assets/fonst/RobotoSlab-Regular.ttf')
+//     })
+// }
 
 const Login = () => {
     const [state, setState] = useState(initialState)
@@ -31,8 +30,16 @@ const Login = () => {
     // const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [isKeyboardShow, setIsKeyboardShow] = useState(false);
-    const [isReady, setIsReady] = useState(false);
     const auth = FIREBASE_AUTH;
+
+    
+  const [fontsLoaded] = useFonts({
+    'RobotoSlab-Regular': require('../../assets/fonst/RobotoSlab-Regular.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
     const keyBoardHide = () => {
         Keyboard.dismiss();
@@ -57,7 +64,8 @@ const Login = () => {
 
     // if(!isReady) {
     //     return <AppLoading startAsync={loadApp}
-    //         onFinish={() => setIsReady(true)}/>
+    //         onFinish={() => setIsReady(true)}
+    //         onError={console.warn}/>
     // }
     
     const signUp = async () => {
@@ -143,6 +151,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginBottom: 10,
         fontSize: 18,
+        fontFamily: 'RobotoSlab-Regular',
     },
 
     input: {
