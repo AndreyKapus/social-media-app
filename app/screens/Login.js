@@ -9,12 +9,20 @@ import { View,
         KeyboardAvoidingView,
         Keyboard, } from "react-native";
 import React, {useState} from 'react'
+import * as Font from 'expo-font';
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import AppLoading from 'expo-app-loading';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const initialState ={
     email: '',
     password: ''
+};
+
+const loadApp = async () => {
+    await Font.loadAsync({
+        'RobotoSlab-regular': require('../../assets/fonst/RobotoSlab-Regular.ttf')
+    })
 }
 
 const Login = () => {
@@ -22,14 +30,15 @@ const Login = () => {
     // const [login, setLogin] = useState('');
     // const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isKeyboardShow, setIsKeyboardShow] = useState(false)
+    const [isKeyboardShow, setIsKeyboardShow] = useState(false);
+    const [isReady, setIsReady] = useState(false);
     const auth = FIREBASE_AUTH;
 
     const keyBoardHide = () => {
         Keyboard.dismiss();
         setIsKeyboardShow(false);
         setState(initialState)
-    }
+    };
 
     const signIn = async () => {
         setLoading(true);
@@ -38,7 +47,7 @@ const Login = () => {
             const responce = await signInWithEmailAndPassword(auth, state.email, state.password);
             console.log(responce);
             alert('Welcome')
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
             alert('Something went wrong'+ error.message)
         } finally {
@@ -46,6 +55,10 @@ const Login = () => {
         }
     };
 
+    // if(!isReady) {
+    //     return <AppLoading startAsync={loadApp}
+    //         onFinish={() => setIsReady(true)}/>
+    // }
     
     const signUp = async () => {
         setLoading(true);
@@ -53,7 +66,7 @@ const Login = () => {
             const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
             console.log(responce);
             alert('Check your email')
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
             alert('Something went wrong'+ error.message)
         } finally {
