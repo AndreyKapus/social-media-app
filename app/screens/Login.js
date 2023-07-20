@@ -14,7 +14,7 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import AppLoading from 'expo-app-loading';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
-const initialState ={
+const initialState = {
     email: '',
     password: ''
 };
@@ -84,7 +84,7 @@ const Login = () => {
                         <TextInput 
                             style={styles.input} 
                             autoCapitalize="none"
-                            onChangeText={(value) => setState((prevState) => ({...prevState, login: value}) )}
+                            onChangeText={(value) => setState((prevState) => ({...prevState, email: value}) )}
                             textAlign={"center"}
                             value={state.email}
                             onFocus={() => setIsKeyboardShow(true)}>
