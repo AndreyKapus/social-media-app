@@ -119,9 +119,10 @@ const Register = () => {
                     </Text>
                 </TouchableOpacity>
             </View>}
-            <Button title="Go to login" onPress={() => navigation.navigate('Login')}>
-                    
-                    </Button>
+
+            <TouchableOpacity style={styles.navButtonContainer} onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.navButton}>Go to login</Text>
+            </TouchableOpacity>
             </View>
             </KeyboardAvoidingView>
         </ImageBackground>
@@ -172,6 +173,17 @@ const styles = StyleSheet.create({
     },
 
     btnText: {
+        color: '#fff',
+        fontSize: 18,
+    },
+
+    navButtonContainer: {
+        marginTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    navButton: {
         color: '#fff',
         fontSize: 18,
     }
