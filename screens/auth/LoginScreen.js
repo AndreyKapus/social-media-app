@@ -7,10 +7,13 @@ import { View,
         TouchableOpacity,
         Platform,
         KeyboardAvoidingView,
+        Button,
         Keyboard, } from "react-native";
 import React, {useState} from 'react'
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import Register from "./RegisterScreen";
+import { useNavigation } from "@react-navigation/native";
 
 const initialState = {
     email: '',
@@ -23,6 +26,7 @@ const Login = () => {
     const [isKeyboardShow, setIsKeyboardShow] = useState(false);
     const auth = FIREBASE_AUTH;
 
+    const navigation = useNavigation()
 
     const keyBoardHide = () => {
         Keyboard.dismiss();
@@ -98,6 +102,9 @@ const Login = () => {
                     {/* <Button title="Login"  onPress={signIn}></Button>
                     <Button title="SignUp" onPress={signUp}></Button> */}
                 </View>}
+                <Button title="Go to register" onPress={() => navigation.navigate('Register')}>
+                    
+                </Button>
                 </View>
                 </KeyboardAvoidingView>
             </ImageBackground>
