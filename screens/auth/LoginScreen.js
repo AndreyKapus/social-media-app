@@ -9,37 +9,20 @@ import { View,
         KeyboardAvoidingView,
         Keyboard, } from "react-native";
 import React, {useState} from 'react'
-import { useFonts } from 'expo-font';
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const initialState = {
     email: '',
-    password: ''
+    password: '',
 };
-
-// const loadApp = async () => {
-//     await Font.loadAsync({
-//         'RobotoSlab-regular': require('../../assets/fonst/RobotoSlab-Regular.ttf')
-//     })
-// }
 
 const Login = () => {
     const [state, setState] = useState(initialState)
-    // const [login, setLogin] = useState('');
-    // const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [isKeyboardShow, setIsKeyboardShow] = useState(false);
     const auth = FIREBASE_AUTH;
 
-    
-  const [fontsLoaded] = useFonts({
-    'RobotoSlab-Regular': require('../../assets/fonst/RobotoSlab-Regular.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
     const keyBoardHide = () => {
         Keyboard.dismiss();
@@ -61,26 +44,20 @@ const Login = () => {
             setLoading(false)
         }
     };
-
-    // if(!isReady) {
-    //     return <AppLoading startAsync={loadApp}
-    //         onFinish={() => setIsReady(true)}
-    //         onError={console.warn}/>
-    // }
     
-    const signUp = async () => {
-        setLoading(true);
-        try{
-            const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
-            console.log(responce);
-            alert('Check your email')
-        } catch (error) {
-            console.log(error);
-            alert('Something went wrong'+ error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
+    // const signUp = async () => {
+    //     setLoading(true);
+    //     try{
+    //         const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
+    //         console.log(responce);
+    //         alert('Check your email')
+    //     } catch (error) {
+    //         console.log(error);
+    //         alert('Something went wrong'+ error.message)
+    //     } finally {
+    //         setLoading(false)
+    //     }
+    // }
 
     return (
         <View style={styles.container}>
