@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
@@ -9,6 +10,7 @@ import Register from './screens/auth/RegisterScreen';
 
 
 const AuthStack = createNativeStackNavigator()
+const MainTab = createBottomTabNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
