@@ -103,7 +103,9 @@ const Login = () => {
                     <Button title="SignUp" onPress={signUp}></Button> */}
                 </View>}
                 <TouchableOpacity style={styles.navButtonContainer} onPress={() => navigation.navigate('Register')}>
-                    <Text style={styles.navButton}>Go to register</Text>
+                    <Text style={styles.navButton}>
+                        Dont have an account? 
+                        <Text style={styles.navBattonLink}> Sign up</Text></Text>
                 </TouchableOpacity>
                 </View>
                 </KeyboardAvoidingView>
@@ -170,5 +172,10 @@ const styles = StyleSheet.create({
     navButton: {
         color: '#fff',
         fontSize: 18,
+    },
+
+    navBattonLink: {
+        color: "#ff4500",
+        fontSize: 20,
     }
 })
