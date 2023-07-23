@@ -10,6 +10,9 @@ import PostScreen from './screens/main/PostScreen';
 import CreateScreen from './screens/main/CreateScreen';
 import ProfileScreen from './screens/main/ProfileScreen';
 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
+
 export const useRoute = (isAuth) => {
   if(!isAuth) {
     return (
@@ -21,9 +24,12 @@ export const useRoute = (isAuth) => {
   };
    return (
    <MainTab.Navigator tabBarOptions={{showLabel: false}}>
-      <MainTab.Screen name='Post' component={PostScreen}/>
-      <MainTab.Screen name='Create' component={CreateScreen}/>
-      <MainTab.Screen name='Profile' component={ProfileScreen}/>
+      <MainTab.Screen name='Post' component={PostScreen} options={{
+        tabBarIcon: ({focused, size, color}) => (<MaterialIcons name="post-add" size={30} color={color} />)}}/>
+      <MainTab.Screen name='Create' component={CreateScreen} options={{
+        tabBarIcon: ({focused, size, color}) => (<MaterialIcons name="create" size={35} color={color} />)}}/>
+      <MainTab.Screen name='Profile' component={ProfileScreen} options={{
+        tabBarIcon: ({focused, size, color}) => (<AntDesign name="profile" size={24} color={color} />)}}/>
     </MainTab.Navigator>
   )
     }
