@@ -23,7 +23,7 @@ export const useRoute = (isAuth) => {
     )
   };
    return (
-   <MainTab.Navigator tabBarOptions={{showLabel: false}}>
+   <MainTab.Navigator screenOptions={{showLabel: false}}>
       <MainTab.Screen name='Post' component={PostScreen} options={{
         tabBarIcon: ({focused, size, color}) => (<MaterialIcons name="post-add" size={30} color={color} />)}}/>
       <MainTab.Screen name='Create' component={CreateScreen} options={{
