@@ -44,6 +44,9 @@ const CreateScreen = () => {
                 <Text style={styles.snapText}>SNAP</Text>
               </TouchableOpacity>
             </Camera>
+            <TouchableOpacity style={styles.sendbBtn} onPress={takePhoto}>
+                <Text style={styles.sendText}>SEND</Text>
+              </TouchableOpacity>
         </View>
     )
 };
@@ -56,7 +59,9 @@ const styles = StyleSheet.create({
     },
 
     camera: {
-      height: 700,
+      marginTop: 60,
+      marginHorizontal: 2,
+      height: '70%',
       alignItems: 'center',
       justifyContent: "flex-end"
     },
@@ -85,6 +90,22 @@ const styles = StyleSheet.create({
       borderColor: '#ff0000',
       top: 50,
       left: 10,
+    },
+
+    sendbBtn: {
+      marginHorizontal: 40,
+      marginTop: 30,
+      height: 50,
+      borderWidth: 2,
+      borderRadius: 10,
+      borderColor: `#1e90ff`,
+      alignItems: 'center',
+      justifyContent: "center",
+    },
+
+    sendText: {
+      color: `#1e90ff`,
+      fontSize: 20,
     }
   });
 
