@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from 'expo-camera';
 import { useState, useEffect } from "react";
 
-const CreateScreen = () => {
+const CreateScreen = ({navigation}) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState('');
 
@@ -18,6 +18,10 @@ const CreateScreen = () => {
       //     }
       //   })();
       // }, []);
+
+      const sendPhoto =() => {
+        navigation.navigate('Post', {photo})
+      }
 
       useEffect(() => {
         (async () => {
@@ -44,7 +48,7 @@ const CreateScreen = () => {
                 <Text style={styles.snapText}>SNAP</Text>
               </TouchableOpacity>
             </Camera>
-            <TouchableOpacity style={styles.sendbBtn} onPress={takePhoto}>
+            <TouchableOpacity style={styles.sendbBtn} onPress={sendPhoto}>
                 <Text style={styles.sendText}>SEND</Text>
               </TouchableOpacity>
         </View>
