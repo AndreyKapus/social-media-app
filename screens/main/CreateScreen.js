@@ -6,22 +6,13 @@ const CreateScreen = ({navigation}) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState('');
 
-  const [permission, requestPermission] = Camera.useCameraPermissions();
-
-      // useEffect(() => {
-      //   (async () => {
-          
-      //     let { status } = await Location.requestForegroundPermissionsAsync();
-      //     if (status !== 'granted') {
-      //       setErrorMsg('Permission to access location was denied');
-      //       return;
-      //     }
-      //   })();
-      // }, []);
+  const [hasPermission, setHasPermission] = Camera.useCameraPermissions();
+  // const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
       const sendPhoto =() => {
         navigation.navigate('Post', {photo})
-      }
+      };
 
       useEffect(() => {
         (async () => {
@@ -29,6 +20,14 @@ const CreateScreen = ({navigation}) => {
           setHasPermission(status === "granted");
         })();
       }, []);
+
+      
+      if (hasPermission === null) {
+        return ;
+      }
+      if (hasPermission === false) {
+        return <Text>No access to camera</Text>;
+      }
   
   const takePhoto = async () => {
     
@@ -39,13 +38,21 @@ const CreateScreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <Camera style={styles.camera} ref={setCamera}>
+            <Camera style={styles.camera} ref={setCamera} type={type}>
               {photo && 
               <View style={styles.takePhotoContainer}>
                 <Image source={{uri: photo}} style={{ width: 200, height: 200}}/>
               </View>}
               <TouchableOpacity style={styles.snabBtn} onPress={takePhoto}>
                 <Text style={styles.snapText}>SNAP</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.switchCamera} onPress={() => {
+                setType(type === Camera.Constants.Type.back ?
+                  Camera.Constants.Type.front: 
+                  Camera.Constants.Type.back)
+              }}>
+                <Text style={styles.snapText}>switch</Text>
               </TouchableOpacity>
             </Camera>
             <TouchableOpacity style={styles.sendbBtn} onPress={sendPhoto}>
@@ -110,6 +117,11 @@ const styles = StyleSheet.create({
     sendText: {
       color: `#1e90ff`,
       fontSize: 20,
+    },
+    
+    switchCamera: {
+      width: 50,
+      height: 50,
     }
   });
 
