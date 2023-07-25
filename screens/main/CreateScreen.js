@@ -1,12 +1,30 @@
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from 'expo-camera';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CreateScreen = () => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState('');
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
+
+      // useEffect(() => {
+      //   (async () => {
+          
+      //     let { status } = await Location.requestForegroundPermissionsAsync();
+      //     if (status !== 'granted') {
+      //       setErrorMsg('Permission to access location was denied');
+      //       return;
+      //     }
+      //   })();
+      // }, []);
+
+      useEffect(() => {
+        (async () => {
+          const { status } = await Camera.requestCameraPermissionsAsync();
+          setHasPermission(status === "granted");
+        })();
+      }, []);
   
   const takePhoto = async () => {
     
@@ -18,6 +36,10 @@ const CreateScreen = () => {
     return (
         <View style={styles.container}>
             <Camera style={styles.camera} ref={setCamera}>
+              {photo && 
+              <View style={styles.takePhotoContainer}>
+                <Image source={{uri: photo}} style={{ width: 200, height: 200}}/>
+              </View>}
               <TouchableOpacity style={styles.snabBtn} onPress={takePhoto}>
                 <Text style={styles.snapText}>SNAP</Text>
               </TouchableOpacity>
@@ -34,7 +56,7 @@ const styles = StyleSheet.create({
     },
 
     camera: {
-      height: 500,
+      height: 700,
       alignItems: 'center',
       justifyContent: "flex-end"
     },
@@ -56,6 +78,14 @@ const styles = StyleSheet.create({
     snapText: {
       color: '#fff'
     },
+
+    takePhotoContainer: {
+      position: 'absolute',
+      borderWidth: 1,
+      borderColor: '#ff0000',
+      top: 50,
+      left: 10,
+    }
   });
 
 export default CreateScreen;

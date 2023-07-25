@@ -24,11 +24,11 @@ export const useRoute = (isAuth) => {
   };
    return (
    <MainTab.Navigator screenOptions={{showLabel: false}}>
-      <MainTab.Screen name='Post' component={PostScreen} options={{
+      <MainTab.Screen name='Post' component={PostScreen} options={{headerShown: false,
         tabBarIcon: ({focused, size, color}) => (<MaterialIcons name="post-add" size={30} color={color} />)}}/>
-      <MainTab.Screen name='Create' component={CreateScreen} options={{
+      <MainTab.Screen name='Create' component={CreateScreen} options={{headerShown: false,
         tabBarIcon: ({focused, size, color}) => (<MaterialIcons name="create" size={35} color={color} />)}}/>
-      <MainTab.Screen name='Profile' component={ProfileScreen} options={{
+      <MainTab.Screen name='Profile' component={ProfileScreen} options={{headerShown: false,
         tabBarIcon: ({focused, size, color}) => (<AntDesign name="profile" size={24} color={color} />)}}/>
     </MainTab.Navigator>
   )
