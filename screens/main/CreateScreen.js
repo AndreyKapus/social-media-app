@@ -5,32 +5,32 @@ import { useState, useEffect } from "react";
 const CreateScreen = ({navigation}) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState('');
-
-  const [hasPermission, setHasPermission] = Camera.useCameraPermissions();
-  // const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  
+  const [hasPermission, setHasPermission] = useState(null);
+  // const [cameraRef, setCameraRef] = useState(null);
+ 
 
-      const sendPhoto =() => {
-        navigation.navigate('Post', {photo})
-      };
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
 
-      useEffect(() => {
-        (async () => {
-          const { status } = await Camera.requestCameraPermissionsAsync();
-          setHasPermission(status === "granted");
-        })();
-      }, []);
-
+      setHasPermission(status === "granted");
+    })();
+  }, []);
       
       if (hasPermission === null) {
-        return ;
+        return <Text>sadsadsa</Text>;
       }
       if (hasPermission === false) {
         return <Text>No access to camera</Text>;
       }
+
+  const sendPhoto =() => {
+        navigation.navigate('Post', {photo})
+      };
   
   const takePhoto = async () => {
-    
     const photo = await camera.takePictureAsync()
     // console.log('camera->', photo.uri)
     setPhoto(photo.uri);
