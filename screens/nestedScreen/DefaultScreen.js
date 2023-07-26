@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet, FlatList, Image } from "react-native";
+import { Text, View, StyleSheet, FlatList, Image, Button } from "react-native";
 
-const DefaultScreen = ({route}) => {
+const DefaultScreen = ({route, navigation}) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -21,6 +21,8 @@ const DefaultScreen = ({route}) => {
                   <Image source={{uri: item}} style={styles.photo}/>
                 </View>
             )}/>
+            <Button title="Go to map" onPress={() => navigation.navigate('Map')}/>
+            <Button title="Go to comments" onPress={() => navigation.navigate('Comments')}/>
         </View>
     )
 };
