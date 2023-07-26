@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from 'expo-camera';
 import { useState, useEffect } from "react";
+import * as Location from 'expo-location';
 
 const CreateScreen = ({navigation}) => {
   const [camera, setCamera] = useState(null);
@@ -14,7 +15,7 @@ const CreateScreen = ({navigation}) => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-
+      await Location.requestForegroundPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -32,7 +33,8 @@ const CreateScreen = ({navigation}) => {
   
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync()
-    // console.log('camera->', photo.uri)
+    const location = await Location.getCurrentPositionAsync();
+    console.log('location->', location)
     setPhoto(photo.uri);
   };
 
