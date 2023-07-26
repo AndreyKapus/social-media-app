@@ -28,7 +28,7 @@ const CreateScreen = ({navigation}) => {
       }
 
   const sendPhoto =() => {
-        navigation.navigate('Post', {photo})
+        navigation.navigate('DefaultScreen', {photo})
       };
   
   const takePhoto = async () => {
