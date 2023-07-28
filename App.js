@@ -8,7 +8,7 @@ import { useRoute } from './router';
 import { store } from './redux/store'
 
 export default function App() {
-  const routing = useRoute(true)
+  const routing = useRoute(false)
   const [fontsLoaded] = useFonts({
     'RobotoSlab-Regular': require('./assets/fonst/RobotoSlab-Regular.ttf'),
   });
