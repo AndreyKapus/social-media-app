@@ -3,8 +3,9 @@ import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
-
+import {Provider} from 'react-redux'
 import { useRoute } from './router';
+import { store } from './redux/store'
 
 export default function App() {
   const routing = useRoute(true)
@@ -17,9 +18,11 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer>
-      {routing}
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        {routing}
+      </NavigationContainer>
+    </Provider>
   );
 }
 
