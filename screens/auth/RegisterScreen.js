@@ -14,6 +14,8 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import Login from "./LoginScreen";
 import { useNavigation } from "@react-navigation/native";
+import {useDispatch} from 'react-redux';
+import { authSignUpUser} from '../../redux/auth/authOperations'
 
 const initialState = {
     email: '',
@@ -28,6 +30,7 @@ const Register = () => {
     const [isKeyboardShow, setIsKeyboardShow] = useState(false);
     const auth = FIREBASE_AUTH;
 
+    const dispatch = useDispatch()
 
     const keyBoardHide = () => {
         Keyboard.dismiss();
@@ -37,34 +40,24 @@ const Register = () => {
 
     const navigation = useNavigation()
 
-    // const signIn = async () => {
+    const handleSubmit = () => {
+        dispatch(authSignUpUser(state));
+        setState(initialState)
+    }
+    
+    // const signUp = async () => {
     //     setLoading(true);
-    //     keyBoardHide()
     //     try{
-    //         const responce = await signInWithEmailAndPassword(auth, state.email, state.password);
+    //         const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
     //         console.log(responce);
-    //         alert('Welcome')
+    //         alert('Check your email')
     //     } catch (error) {
     //         console.log(error);
     //         alert('Something went wrong'+ error.message)
     //     } finally {
     //         setLoading(false)
     //     }
-    // };
-    
-    const signUp = async () => {
-        setLoading(true);
-        try{
-            const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
-            console.log(responce);
-            alert('Check your email')
-        } catch (error) {
-            console.log(error);
-            alert('Something went wrong'+ error.message)
-        } finally {
-            setLoading(false)
-        }
-    }
+    // }
 
     return (
         <View style={styles.container}>
@@ -113,7 +106,7 @@ const Register = () => {
                         Sign in
                     </Text>
                 </TouchableOpacity> */}
-                <TouchableOpacity style={styles.button} onPress={signUp} activeOpacity={0.8}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit} activeOpacity={0.8}>
                     <Text style={styles.btnText}>
                         Sign Up
                     </Text>
