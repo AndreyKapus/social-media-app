@@ -14,7 +14,7 @@ export const authSignUpUser = ({email, password, name}) => async (dispatch, getS
 };
 
 export const authSignInUser = ({email, password}) => async (dispatch, getState) => {
-    console.log(email, password, name)
+    console.log(email, password)
     try{
         const user = await signInWithEmailAndPassword(auth, email, password)
         console.log('user', user)

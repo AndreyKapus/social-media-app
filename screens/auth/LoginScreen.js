@@ -14,6 +14,8 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import Register from "./RegisterScreen";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import {authSignInUser} from '../../redux/auth/authOperations'
 
 const initialState = {
     email: '',
@@ -26,42 +28,31 @@ const Login = () => {
     const [isKeyboardShow, setIsKeyboardShow] = useState(false);
     const auth = FIREBASE_AUTH;
 
+    const dispatch = useDispatch()
+
     const navigation = useNavigation()
 
-    const keyBoardHide = () => {
+    const handleSubmit = () => {
+        dispatch(authSignInUser(state))
         Keyboard.dismiss();
         setIsKeyboardShow(false);
         setState(initialState)
     };
 
-    const signIn = async () => {
-        setLoading(true);
-        keyBoardHide()
-        try{
-            const responce = await signInWithEmailAndPassword(auth, state.email, state.password);
-            console.log(responce);
-            alert('Welcome')
-        } catch (error) {
-            console.log(error);
-            alert('Something went wrong'+ error.message)
-        } finally {
-            setLoading(false)
-        }
-    };
-    
-    // const signUp = async () => {
+    // const signIn = async () => {
     //     setLoading(true);
+    //     keyBoardHide()
     //     try{
-    //         const responce = await createUserWithEmailAndPassword(auth, state.email, state.password);
+    //         const responce = await signInWithEmailAndPassword(auth, state.email, state.password);
     //         console.log(responce);
-    //         alert('Check your email')
+    //         alert('Welcome')
     //     } catch (error) {
     //         console.log(error);
     //         alert('Something went wrong'+ error.message)
     //     } finally {
     //         setLoading(false)
     //     }
-    // }
+    // };
 
     return (
         <View style={styles.container}>
@@ -94,7 +85,7 @@ const Login = () => {
 
                     {loading ? <ActivityIndicator size="large" color="#000000"/>
                 : <View>
-                    <TouchableOpacity style={styles.button} onPress={signIn} activeOpacity={0.8}>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit} activeOpacity={0.8}>
                         <Text style={styles.btnText}>
                             Sign in
                         </Text>
